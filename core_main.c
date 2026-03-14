@@ -237,7 +237,8 @@ for (i = 0; i < MULTITHREAD; i++)
                 results[0].size, results[i].seed1, results[i].memblock[3]);
         }
     }
-
+// EDIT
+#ifndef ITERATIONS_FORCE
     /* automatically determine number of iterations if not set */
     if (results[0].iterations == 0)
     {
@@ -261,6 +262,10 @@ for (i = 0; i < MULTITHREAD; i++)
             divisor = 1;
         results[0].iterations *= 1 + 10 / divisor;
     }
+#else
+    results[0].iterations = ITERATIONS;
+#endif
+// ~EDIT
     /* perform actual benchmark */
     start_time();
 #if (MULTITHREAD > 1)

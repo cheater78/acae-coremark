@@ -659,10 +659,13 @@ ee_vsprintf(char *buf, const char *fmt, va_list args)
     return str - buf;
 }
 
+// EDIT
+#include "semihosting.h" // EDIT
 void
 uart_send_char(char c)
 {
-#error "You must implement the method uart_send_char to use this file!\n";
+// EDIT #error "You must implement the method uart_send_char to use this file!\n";
+    semihost_write_char(c); // EDIT
     /*	Output of a char to a UART usually follows the following model:
             Wait until UART is ready
             Write char to UART
@@ -677,6 +680,7 @@ uart_send_char(char c)
        documentation.
     */
 }
+// ~EDIT
 
 int
 ee_printf(const char *fmt, ...)

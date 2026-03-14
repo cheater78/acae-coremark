@@ -44,8 +44,7 @@ volatile ee_s32 seed5_volatile = 0;
 CORETIMETYPE
 barebones_clock()
 {
-#error \
-    "You must implement a method to measure time in barebones_clock()! This function should return current time.\n"
+    return systick(); // EDIT
 }
 /* Define : TIMER_RES_DIVIDER
         Divider to trade off timer resolution and total time that can be
@@ -129,8 +128,10 @@ ee_u32 default_num_contexts = 1;
 void
 portable_init(core_portable *p, int *argc, char *argv[])
 {
-#error \
-    "Call board initialization routines in portable init (if needed), in particular initialize UART!\n"
+// EDIT #error \
+// EDIT    "Call board initialization routines in portable init (if needed), in particular initialize UART!\n"
+    default_num_contexts = 1; // DANGER: is somewhere reset to 0, force 1 on init(here)!
+    // ~EDIT
 
     (void)argc; // prevent unused warning
     (void)argv; // prevent unused warning

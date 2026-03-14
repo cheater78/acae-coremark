@@ -15,6 +15,18 @@ limitations under the License.
 
 Original Author: Shay Gal-on
 */
+
+// EDIT
+#include "sys.h" // for systick
+#define ITERATIONS 1024
+#define ITERATIONS_FORCE 1
+#define CLOCKS_PER_SEC 100000UL
+
+#ifndef FLAGS_STR
+#define FLAGS_STR "Define FLAGS_STR in Makefile!!"
+#endif
+// ~EDIT
+
 /* Topic : Description
         This file contains configuration constants required to execute on
    different platforms
@@ -28,21 +40,21 @@ Original Author: Shay Gal-on
         Define to 1 if the platform supports floating point.
 */
 #ifndef HAS_FLOAT
-#define HAS_FLOAT 1
+#define HAS_FLOAT 0
 #endif
 /* Configuration : HAS_TIME_H
         Define to 1 if platform has the time.h header file,
         and implementation of functions thereof.
 */
 #ifndef HAS_TIME_H
-#define HAS_TIME_H 1
+#define HAS_TIME_H 0
 #endif
 /* Configuration : USE_CLOCK
         Define to 1 if platform has the time.h header file,
         and implementation of functions thereof.
 */
 #ifndef USE_CLOCK
-#define USE_CLOCK 1
+#define USE_CLOCK 0
 #endif
 /* Configuration : HAS_STDIO
         Define to 1 if the platform has stdio.h.
@@ -69,8 +81,7 @@ Original Author: Shay Gal-on
 #endif
 #endif
 #ifndef COMPILER_FLAGS
-#define COMPILER_FLAGS \
-    FLAGS_STR /* "Please put compiler flags here (e.g. -o3)" */
+#define COMPILER_FLAGS FLAGS_STR
 #endif
 #ifndef MEM_LOCATION
 #define MEM_LOCATION "STACK"
@@ -91,7 +102,7 @@ typedef double         ee_f32;
 typedef unsigned char  ee_u8;
 typedef unsigned int   ee_u32;
 typedef ee_u32         ee_ptr_int;
-typedef size_t         ee_size_t;
+typedef ee_u32         ee_size_t; // EDIT now: ee_u32 was: size_t
 #define NULL ((void *)0)
 /* align_mem :
         This macro is used to align an offset to point to a 32b value. It is
