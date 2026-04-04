@@ -16,6 +16,7 @@ limitations under the License.
 Original Author: Shay Gal-on
 */
 #include "coremark.h"
+#include "sys.h"
 #include "core_portme.h"
 
 #if VALIDATION_RUN
@@ -44,7 +45,7 @@ volatile ee_s32 seed5_volatile = 0;
 CORETIMETYPE
 barebones_clock()
 {
-    return systick(); // EDIT
+    return dwt_cyccnt(); // EDIT
 }
 /* Define : TIMER_RES_DIVIDER
         Divider to trade off timer resolution and total time that can be
