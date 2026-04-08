@@ -45,7 +45,7 @@ volatile ee_s32 seed5_volatile = 0;
 CORETIMETYPE
 barebones_clock()
 {
-    return dwt_cyccnt(); // EDIT
+    return DWT_CYCCNT; // EDIT
 }
 /* Define : TIMER_RES_DIVIDER
         Divider to trade off timer resolution and total time that can be
@@ -56,7 +56,7 @@ barebones_clock()
    increase this value.
         */
 #define GETMYTIME(_t)              (*_t = barebones_clock())
-#define MYTIMEDIFF(fin, ini)       ((fin) - (ini))
+#define MYTIMEDIFF(fin, ini)       (fin < ini ? (fin + ((!0x0) - ini)) : (fin - ini))
 #define TIMER_RES_DIVIDER          1
 #define SAMPLE_TIME_IMPLEMENTATION 1
 #define EE_TICKS_PER_SEC           (CLOCKS_PER_SEC / TIMER_RES_DIVIDER)

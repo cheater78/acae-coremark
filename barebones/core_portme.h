@@ -18,9 +18,9 @@ Original Author: Shay Gal-on
 
 // EDIT
 #include "sys.h" // for systick
-#define ITERATIONS 1024
-#define ITERATIONS_FORCE 1
-#define CLOCKS_PER_SEC 100000UL
+#include "printf.h" // for printf
+#define ITERATIONS 64UL
+#define CLOCKS_PER_SEC 100000000UL
 
 #ifndef FLAGS_STR
 #define FLAGS_STR "Define FLAGS_STR in Makefile!!"
@@ -40,7 +40,7 @@ Original Author: Shay Gal-on
         Define to 1 if the platform supports floating point.
 */
 #ifndef HAS_FLOAT
-#define HAS_FLOAT 0
+#define HAS_FLOAT 1
 #endif
 /* Configuration : HAS_TIME_H
         Define to 1 if platform has the time.h header file,
@@ -67,7 +67,7 @@ Original Author: Shay Gal-on
    function.
 */
 #ifndef HAS_PRINTF
-#define HAS_PRINTF 0
+#define HAS_PRINTF 1
 #endif
 
 /* Definitions : COMPILER_VERSION, COMPILER_FLAGS, MEM_LOCATION
