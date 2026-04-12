@@ -16,7 +16,6 @@ limitations under the License.
 Original Author: Shay Gal-on
 */
 #include "coremark.h"
-#include "sys.h"
 #include "core_portme.h"
 
 #if VALIDATION_RUN
@@ -34,7 +33,7 @@ volatile ee_s32 seed1_volatile = 0x8;
 volatile ee_s32 seed2_volatile = 0x8;
 volatile ee_s32 seed3_volatile = 0x8;
 #endif
-volatile ee_s32 seed4_volatile = ITERATIONS;
+volatile ee_s32 seed4_volatile = ITERATIONS; // EDIT
 volatile ee_s32 seed5_volatile = 0;
 /* Porting : Timing functions
         How to capture time and convert to seconds must be ported to whatever is
@@ -45,7 +44,7 @@ volatile ee_s32 seed5_volatile = 0;
 CORETIMETYPE
 barebones_clock()
 {
-    return DWT_CYCCNT; // EDIT
+    return dwt_cyccnt(); // EDIT
 }
 /* Define : TIMER_RES_DIVIDER
         Divider to trade off timer resolution and total time that can be
@@ -56,7 +55,7 @@ barebones_clock()
    increase this value.
         */
 #define GETMYTIME(_t)              (*_t = barebones_clock())
-#define MYTIMEDIFF(fin, ini)       (fin < ini ? (fin + ((!0x0) - ini)) : (fin - ini))
+#define MYTIMEDIFF(fin, ini)       tick_diff_u32(ini, fin)
 #define TIMER_RES_DIVIDER          1
 #define SAMPLE_TIME_IMPLEMENTATION 1
 #define EE_TICKS_PER_SEC           (CLOCKS_PER_SEC / TIMER_RES_DIVIDER)
@@ -102,8 +101,8 @@ stop_time(void)
 CORE_TICKS
 get_time(void)
 {
-    CORE_TICKS elapsed
-        = (CORE_TICKS)(MYTIMEDIFF(stop_time_val, start_time_val));
+    CORE_TICKS elapsed = (CORE_TICKS)(MYTIMEDIFF(stop_time_val, start_time_val));
+    printf("get_time: start=%lu, stop=%lu, elapsed=%lu\n", (unsigned long)start_time_val, (unsigned long)stop_time_val, (unsigned long)elapsed);
     return elapsed;
 }
 /* Function : time_in_secs
@@ -117,6 +116,7 @@ secs_ret
 time_in_secs(CORE_TICKS ticks)
 {
     secs_ret retval = ((secs_ret)ticks) / (secs_ret)EE_TICKS_PER_SEC;
+    printf("time_in_secs: %f\n", retval);
     return retval;
 }
 

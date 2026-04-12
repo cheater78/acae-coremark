@@ -238,7 +238,7 @@ for (i = 0; i < MULTITHREAD; i++)
         }
     }
 // EDIT
-    results[0].iterations = ITERATIONS;
+    results[0].iterations = ITERATIONS; // start at ITERATIONS, incr. to reach 10s (1s training)
     secs_ret secs_passed = 0;
     ee_u32 divisor;
     while (secs_passed < (secs_ret)1)
@@ -251,6 +251,9 @@ for (i = 0; i < MULTITHREAD; i++)
         printf("Training finished: %lu iterations, %lu cycles, t=%fs\n", results[0].iterations, get_time(), secs_passed);
 
         results[0].iterations *= 10;
+
+        if (results[0].iterations >= 6400)
+            break;
     }
     /* now we know it executes for at least 1 sec, set actual run time at
         * about 10 secs */

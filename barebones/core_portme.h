@@ -17,9 +17,8 @@ Original Author: Shay Gal-on
 */
 
 // EDIT
-#include "sys.h" // for systick
-#include "printf.h" // for printf
-#define ITERATIONS 64UL
+#include "bmstdlib.h" // brings all the good stuff
+#define ITERATIONS 1UL
 #define CLOCKS_PER_SEC 100000000UL
 
 #ifndef FLAGS_STR
