@@ -17,8 +17,9 @@ Original Author: Shay Gal-on
 */
 
 // EDIT
-#include "bmstdlib.h" // brings all the good stuff
-#define ITERATIONS 1UL
+#include "bmstdlib.h" // printf, dwt_cyccnt, tick_diff_u32
+// ITERATIONS: 0 -> auto, 860 -> 10s
+#define ITERATIONS 0UL
 #define CLOCKS_PER_SEC 100000000UL
 
 #ifndef FLAGS_STR

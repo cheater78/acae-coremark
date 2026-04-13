@@ -237,33 +237,30 @@ for (i = 0; i < MULTITHREAD; i++)
                 results[0].size, results[i].seed1, results[i].memblock[3]);
         }
     }
-// EDIT
-    results[0].iterations = ITERATIONS; // start at ITERATIONS, incr. to reach 10s (1s training)
-    secs_ret secs_passed = 0;
-    ee_u32 divisor;
-    while (secs_passed < (secs_ret)1)
+
+    /* automatically determine number of iterations if not set */
+    if (results[0].iterations == 0)
     {
-        start_time();
-        iterate(&results[0]);
-        stop_time();
-        secs_passed = time_in_secs(get_time());
-
-        printf("Training finished: %lu iterations, %lu cycles, t=%fs\n", results[0].iterations, get_time(), secs_passed);
-
-        results[0].iterations *= 10;
-
-        if (results[0].iterations >= 6400)
-            break;
+        secs_ret secs_passed = 0;
+        ee_u32   divisor;
+        results[0].iterations = 1;
+        while (secs_passed < (secs_ret)1)
+        {
+            results[0].iterations *= 10;
+            start_time();
+            iterate(&results[0]);
+            stop_time();
+            secs_passed = time_in_secs(get_time());
+        }
+        /* now we know it executes for at least 1 sec, set actual run time at
+         * about 10 secs */
+        divisor = (ee_u32)secs_passed;
+        if (divisor == 0) /* some machines cast float to int as 0 since this
+                             conversion is not defined by ANSI, but we know at
+                             least one second passed */
+            divisor = 1;
+        results[0].iterations *= 1 + 10 / divisor;
     }
-    /* now we know it executes for at least 1 sec, set actual run time at
-        * about 10 secs */
-    divisor = (secs_ret)secs_passed;
-    if (divisor == 0) /* some machines cast float to int as 0 since this
-                            conversion is not defined by ANSI, but we know at
-                            least one second passed */
-        divisor = 1;
-    results[0].iterations = (1 * results[0].iterations) + ((10 * results[0].iterations) / divisor);
-// ~EDIT
     /* perform actual benchmark */
     start_time();
 #if (MULTITHREAD > 1)
@@ -373,7 +370,7 @@ for (i = 0; i < MULTITHREAD; i++)
                   default_num_contexts * results[0].iterations
                       / time_in_secs(total_time));
 #endif
-    if (time_in_secs(total_time) < 10 * CLOCKS_PER_SEC) //EDIT: correct for EE_CYCLES_PER_SEC being prescaled
+    if (time_in_secs(total_time) < 10)
     {
         ee_printf(
             "ERROR! Must execute for at least 10 secs for a valid result!\n");

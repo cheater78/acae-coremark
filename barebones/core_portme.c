@@ -102,7 +102,6 @@ CORE_TICKS
 get_time(void)
 {
     CORE_TICKS elapsed = (CORE_TICKS)(MYTIMEDIFF(stop_time_val, start_time_val));
-    printf("get_time: start=%lu, stop=%lu, elapsed=%lu\n", (unsigned long)start_time_val, (unsigned long)stop_time_val, (unsigned long)elapsed);
     return elapsed;
 }
 /* Function : time_in_secs
@@ -116,7 +115,6 @@ secs_ret
 time_in_secs(CORE_TICKS ticks)
 {
     secs_ret retval = ((secs_ret)ticks) / (secs_ret)EE_TICKS_PER_SEC;
-    printf("time_in_secs: %f\n", retval);
     return retval;
 }
 
