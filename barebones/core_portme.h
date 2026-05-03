@@ -18,9 +18,15 @@ Original Author: Shay Gal-on
 
 // EDIT
 #include "bmstdlib.h" // printf, dwt_cyccnt, tick_diff_u32
-// ITERATIONS: 0 -> auto, 860 -> 10s
+// ITERATIONS: 0 -> auto, 855 -> ~10s, >~3500 -> CYCCNT OF
+//  can be overriden by CPPFlags
+#ifndef ITERATIONS
 #define ITERATIONS 0UL
-#define CLOCKS_PER_SEC 100000000UL
+#endif
+#ifndef ALLOW_INVALID_RUNS
+#define ALLOW_INVALID_RUNS 1
+#endif
+#define CLOCKS_PER_SEC F_CPU
 
 #ifndef FLAGS_STR
 #define FLAGS_STR "Define FLAGS_STR in Makefile!!"

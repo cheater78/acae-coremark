@@ -430,7 +430,21 @@ for (i = 0; i < MULTITHREAD; i++)
         ee_printf(
             "Cannot validate operation for these seed values, please compare "
             "with results on a known platform.\n");
-
+    // EDIT
+#if HAS_FLOAT
+    double cm_score = 0.0;
+    double cm_score_per_MHz = 0.0;
+    if (!total_errors || ALLOW_INVALID_RUNS) {
+        cm_score = default_num_contexts * results[0].iterations / time_in_secs(total_time);
+        cm_score_per_MHz = cm_score / (HZ / MICS_PER_SECOND);
+    }
+    ee_printf("Score in CoreMark:\n");
+    ee_printf("Score: %f\n", cm_score);
+    ee_printf("Score/MHz: %f\n", cm_score_per_MHz);
+#else
+    #error "CoreMark for ACAE requires FLOAT, at least provide softfloat!"
+#endif
+    //~EDIT
 #if (MEM_METHOD == MEM_MALLOC)
     for (i = 0; i < MULTITHREAD; i++)
         portable_free(results[i].memblock[0]);
