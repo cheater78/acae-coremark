@@ -438,9 +438,8 @@ for (i = 0; i < MULTITHREAD; i++)
         cm_score = default_num_contexts * results[0].iterations / time_in_secs(total_time);
         cm_score_per_MHz = cm_score / (HZ / MICS_PER_SECOND);
     }
-    ee_printf("Score in CoreMark:\n");
-    ee_printf("Score: %f\n", cm_score);
-    ee_printf("Score/MHz: %f\n", cm_score_per_MHz);
+    ee_printf("Score: %f CoreMark\n", cm_score);
+    ee_printf("Score/MHz: %f CoreMark\n", cm_score_per_MHz);
 #else
     #error "CoreMark for ACAE requires FLOAT, at least provide softfloat!"
 #endif
